@@ -6,7 +6,6 @@ body {
   justify-content: center;
   align-items: center;
   background: linear-gradient(30deg, rgb(52, 53, 53) 60%, rgb(143, 141, 141) 60%);
-  /* font-family: 'Permanent Marker', cursive; */
   font-family: 'Luckiest Guy', cursive;
   color: rgb(0, 0, 0);
   font-weight: 800;
