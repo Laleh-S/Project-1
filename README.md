@@ -23,6 +23,7 @@ My planning and wireframing for this project was very limited due to my lack of 
 <img width="1132" alt="Screen Shot 2022-08-19 at 18 02 20" src="https://user-images.githubusercontent.com/92860992/185671657-6729f439-0d42-44d7-a8d5-e9834a03ba89.png">
 
 ## Project Screenshot
+<img width="865" alt="Screen Shot 2022-09-09 at 21 05 24" src="https://user-images.githubusercontent.com/92860992/189425539-88ba3a7a-891b-4a6d-a96a-69f4d5e559e8.png">
 
 
 ## Key Learnings/Takeaways
