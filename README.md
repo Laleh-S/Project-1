@@ -2,7 +2,7 @@
 Link to project https://laleh-s.github.io/Project/
 
 ## Overview
-After learning JavaScript for only two weeks, I had to build and design a JavaScript grid game. I decided to chose snake because I used to enjoy playing this game on my sony ericsson phone.
+After learning JavaScript for only two weeks, I had to build and design a JavaScript grid game. I decided to choose snake because I used to enjoy playing this game on my sony ericsson phone.
 
 ## Requirements
 - Render a game in the browser
