@@ -19,7 +19,10 @@ After learning JavaScript for only two weeks, I had to build and design a JavaSc
 - GitHub Pages
 
 ## Wireframe and planning
-My planning and wireframing for this project was very limited due to my lack of experience. I was not sure what and how much details I had to add to this. My initial planning for this project was very limited due to my lack of experience. I was so excited about starting a project and I started working on it immediately.   
+My planning and wireframing for this project was very limited due to my lack of experience. I was not sure what and how much details I had to add to this. My initial planning for this project was very limited due to my lack of experience. I was so excited about starting a project and I started working on it immediately.  
+
+
+
 
 <img width="1132" alt="Screen Shot 2022-08-19 at 18 02 20" src="https://user-images.githubusercontent.com/92860992/185671657-6729f439-0d42-44d7-a8d5-e9834a03ba89.png">
 
@@ -28,7 +31,6 @@ My planning and wireframing for this project was very limited due to my lack of 
 
 
 ## Key Learnings
-
 The main thing I learned in this project was the importance of prior planning, wireframing and sketching before starting writing codes. I literally threw myself right in the middle of coding without knowing exactly what step to take at each stage. I’ve learned that proper planning prior to coding can have a major impact on the final product. I’ve also learned that good planning would give the coder the ability to foresee the problems they may face along the way.
 
 ## Wins
