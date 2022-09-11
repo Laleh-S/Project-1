@@ -30,6 +30,10 @@ My planning and wireframing for this project was very limited due to my lack of 
 
 The main thing I learned in this project was the importance of prior planning, wireframing and sketching before starting writing codes. I literally threw myself right in the middle of coding without knowing exactly what step to take at each stage. I’ve learned that proper planning prior to coding can have a major impact on the final product. I’ve also learned that good planning would give the coder the ability to foresee the problems they may face along the way.
 
+## Wins
+This was my very first project and I only had one week to create this game. In the end I was very happy being able to create and deploy a functioning game and meet all my MVP targets on time.
+
+
 ## Future Improvements
 - Working on different levels
 - Adding bonus features
