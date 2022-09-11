@@ -38,6 +38,7 @@ This was my very first project and I only had one week to create this game. In t
 
 
 ## Future Improvements
+- WFixing issues with collisions
 - Working on different levels
 - Adding bonus features
 - Adding a start button
