@@ -28,6 +28,12 @@ My planning and wireframing for this project was very limited due to my lack of 
 
 ## Key Learnings/Takeaways
 
-
 The main thing I learned in this project was the importance of prior planning, wireframing and sketching before starting writing codes. I literally threw myself right in the middle of coding without knowing exactly what step to take at each stage. I’ve learned that proper planning prior to coding can have a major impact on the final product. I’ve also learned that good planning would give the coder the ability to foresee the problems they may face along the way.
+
+## Future Improvements
+- Working on different levels
+- Adding bonus features
+- Adding a start button
+- Working on the Gameover UI
+
 
