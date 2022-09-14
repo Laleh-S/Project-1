@@ -25,7 +25,7 @@ My planning and wireframing for this project was very limited due to my lack of 
 
 ## Approach 
  
-I first started by creating my grid in HTMl, I very soon realised that creating a 400 grid using HTML is not good practice as It involves a lot of repetitive coding. I then created a div in my HTML and gave it the class name of the “container”.  I targeted that div with the class “container” to append new divs to it. I defined the width and the cell count in variables. I used a for loop to create more divs.
+I first started by creating my grid in HTML, I very soon realised that creating a 400 grid using HTML is not good practice as It involves a lot of repetitive coding. I then created a div in my HTML and gave it the class name of the “container”.  I targeted that div with the class “container” to append new divs to it. I defined the width and the cell count in variables. I used a for loop to create more divs.
 ````
 const container = document.querySelector('.container')
   const width = 20
@@ -77,7 +77,7 @@ The main challenge for me in this project was the fact I did not think through e
 
 
 ## Key Learnings
-The main thing I learned in this project was the importance of prior planning, wireframing and sketching before starting writing codes. I literally threw myself right in the middle of coding without knowing exactly what step to take at each stage. I’ve learned that proper planning prior to coding can have a major impact on the final product. I’ve also learned that good planning would give the coder the ability to foresee the problems they may face along the way.
+The main thing I learned in this project was the importance of prior planning, wireframing and sketching before starting writing codes. I threw myself right in the middle of coding without knowing exactly what step to take at each stage. I’ve learned that proper planning prior to coding can have a major impact on the final product. I’ve also learned that good planning would give the coder the ability to foresee the problems they may face along the way.
 
 ## Wins
 This was my very first project and I only had one week to create this game. In the end I was very happy being able to create and deploy a functioning game and meet all my MVP targets on time.
