@@ -40,8 +40,35 @@ const container = document.querySelector('.container')
   }
 ````
 
+
+One of the difficult parts of creating this game for me was getting the snake movements right. I wanted to allow the snake to move in all directions as well as being able to go through the walls. I wanted users to use the arrow keys to play the game and move the snake around the board.  I registered the key events, added an event listener to the keys on key up and logged event.keyCode in the console to see the number.
+I then used if statements and logged direction for each one depending on which key is pressed.
+````
+const up = 38
+  const right = 39
+  const down = 40
+  const left = 37
+````
+````
+ let currentDirection = up
+  function updateDirection(e) {
+    if (e.keyCode === up){
+      currentDirection = up
+    } else if (e.keyCode === right){
+      currentDirection = right
+    } else if (e.keyCode === down){
+      currentDirection = down
+    } else if (e.keyCode === left){
+      currentDirection = left
+    }
+  }
+````
+<img width="481" alt="Screen Shot 2022-09-14 at 10 23 56" src="https://user-images.githubusercontent.com/92860992/190101557-c2ebcea8-9a2d-41dd-8648-42eb252eb434.png">
+
 ## Project Screenshot
 <img width="865" alt="Screen Shot 2022-09-09 at 21 05 24" src="https://user-images.githubusercontent.com/92860992/189425539-88ba3a7a-891b-4a6d-a96a-69f4d5e559e8.png">
+
+## Challenges
 
 
 ## Key Learnings
