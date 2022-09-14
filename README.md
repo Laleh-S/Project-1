@@ -72,6 +72,8 @@ Function for snake movement using keycodes. I wanted to enable the snake to go t
 <img width="865" alt="Screen Shot 2022-09-09 at 21 05 24" src="https://user-images.githubusercontent.com/92860992/189425539-88ba3a7a-891b-4a6d-a96a-69f4d5e559e8.png">
 
 ## Challenges
+ 
+The main challenge for me in this project was the fact I did not think through everything from the start. I could not visualise the things I would like to do clearly from the start. For that reason I was jumping from one thing to another and that caused me to waste a lot of precious time. The second challenge was the snake movement. I spent 2 days just trying to get the snake to move in all different directions and go through the walls. In the end I was not able to add features like the start button or adding levels to my game. 
 
 
 ## Key Learnings
