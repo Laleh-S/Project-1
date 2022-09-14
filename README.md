@@ -2,7 +2,8 @@
 Link to project https://laleh-s.github.io/Project/
 
 ## Overview
-After learning JavaScript for only two weeks, I had to build and design a JavaScript grid game. I decided to choose snake because I used to enjoy playing this game on my sony ericsson phone.
+After learning JavaScript for only two weeks, I had to build and design a JavaScript grid game. I decided to choose snake because I used to enjoy playing this game on my sony ericsson phone. This was a solo project which I had only one week to complete.
+
 
 ## Requirements
 - Render a game in the browser
@@ -73,7 +74,7 @@ Function for snake movement using keycodes. I wanted to enable the snake to go t
 
 ## Challenges
  
-The main challenge for me in this project was the fact I did not think through everything from the start. I could not visualise the things I would like to do clearly from the start. For that reason I was jumping from one thing to another and that caused me to waste a lot of precious time. The second challenge was the snake movement. I spent 2 days just trying to get the snake to move in all different directions and go through the walls. In the end I was not able to add features like the start button or adding levels to my game. 
+The main challenge for me in this project was the fact I did not think through everything from the start. I could not visualise the things I would like to do clearly from the start. For that reason I was jumping from one thing to another and that caused me to waste a lot of precious time. The second challenge was the snake movement. I spent 2 days just trying to get the snake to move in all different directions and go through the walls. In the end I was not able to add features like the start button or adding levels to my game. Next Time I would make sure I would properly think through everything from the start before starting to code. I learned that proper planning results in less headache and better development.
 
 
 ## Key Learnings
@@ -83,8 +84,12 @@ The main thing I learned in this project was the importance of prior planning, w
 This was my very first project and I only had one week to create this game. In the end I was very happy being able to create and deploy a functioning game and meet all my MVP targets on time.
 
 
+## Bugs
+When the snake grows and while it is moving in one direction if the user presses the opposite direction key, the snake colite with itself which results in gameover. 
+
+
 ## Future Improvements
-- WFixing issues with collisions
+- Fixing issues with collisions
 - Working on different levels
 - Adding bonus features
 - Adding a start button
