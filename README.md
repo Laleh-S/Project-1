@@ -63,6 +63,9 @@ const up = 38
     }
   }
 ````
+
+Function for snake movement using keycodes. I wanted to enable the snake to go through the walls and come out from the otherside. 
+
 <img width="481" alt="Screen Shot 2022-09-14 at 10 23 56" src="https://user-images.githubusercontent.com/92860992/190101557-c2ebcea8-9a2d-41dd-8648-42eb252eb434.png">
 
 ## Project Screenshot
