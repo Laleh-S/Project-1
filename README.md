@@ -1,5 +1,5 @@
 # Snake Game
-Link to project https://laleh-s.github.io/Project/
+Link to project: https://laleh-s.github.io/snake-game/
 
 ## Overview
 After learning JavaScript for only two weeks, I had to build and design a JavaScript grid game. I decided to choose snake because I used to enjoy playing this game on my sony ericsson phone. This was a solo project which I had only one week to complete.
