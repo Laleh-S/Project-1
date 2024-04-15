@@ -9,7 +9,7 @@ body {
   font-family: 'Luckiest Guy', cursive;
   color: rgb(0, 0, 0);
   font-weight: 800;
-  font-stretch:wider;
+  font-stretch: wider;
 }
 
 .container {
@@ -36,13 +36,14 @@ body {
   border-radius: 20px;
 }
 
-h2, h3 {
+h2,
+h3 {
   text-align: center;
 }
 
 #gameOver {
   position: absolute;
-  visibility: hidden; 
+  visibility: hidden;
   padding-left: 50px;
   padding-right: 50px;
   background-color: rgb(243, 245, 109);
@@ -59,7 +60,3 @@ h2, h3 {
   font-size: 20px;
   text-decoration: solid;
 }
-
-
-
-
