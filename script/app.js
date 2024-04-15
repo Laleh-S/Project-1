@@ -69,6 +69,7 @@ function init() {
   function snakeMovement(direction){
     console.log(direction)
 
+    
     const snakeHead = snakeBody[snakeBody.length - 1]
     const snakeTail = snakeBody[0]
     let newSnakeHead;
@@ -106,21 +107,29 @@ function init() {
       snakeBody.unshift(snakeTail)
       apple.shift(newSnakeHead)
       appleEatingSound.play('#apple-audio') // Play eating sound
+      
+
       scoreBoard ++
       scoreDisplay.innerText = scoreBoard
       snakeSpeed ++
       speedDisplay.innerText = snakeSpeed
-      
-      let randomId = Math.floor(Math.random() * 399)
+    
+
+      let randomId = Math.floor(Math.random() * 399);
       while (snakeBody.includes(randomId)) {
-        randomId = Math.floor(Math.random() * 399)
+        randomId = Math.floor(Math.random() * 399);
       }
-      apple.unshift(randomId)
-      document.querySelector('#cell-' + randomId).classList.add('apple') 
-      } else {
-        snakeBody.shift()
-        document.querySelector(`#cell-${snakeTail}`).classList.remove('snake')
-      }
+      apple.unshift(randomId);
+      document.querySelector('#cell-' + randomId).classList.add('apple');
+      
+      appleEatingSound.play('#apple-audio'); // Play eating sound
+    } else {
+      // If not eating an apple, move the snake normally
+      snakeBody.shift();
+      document.querySelector(`#cell-${snakeTail}`).classList.remove('snake');
+    }
+
+
       const isEatingItself = document.querySelector(`#cell-${newSnakeHead}`).classList.contains('snake')
       if (isEatingItself) {
         gameOver = true
@@ -162,6 +171,10 @@ function init() {
 }
 
 window.addEventListener('DOMContentLoaded', init)
+
+
+
+
 
 
 
