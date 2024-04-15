@@ -5,6 +5,8 @@ function init() {
   const width = 20
   const cellCount = width * width
   const cells = []
+  
+  // Create grid cells
   for (let i = 0; i < cellCount; i++) {
     const cell = document.createElement('div')
     cell.id = `cell-${i}`
@@ -24,6 +26,8 @@ function init() {
   const gameOverSound = document.querySelector('#gameover-audio')
   const appleEatingSound = document.querySelector('#apple-audio')
   
+
+  // Initialize snake and apple on the grid
   snakeBody.forEach((idNumber) => {                                                                                                                                    
     const cell = document.querySelector('#cell-' + idNumber)
     cell.classList.add('snake')
@@ -39,13 +43,14 @@ function init() {
   const left = 37
 
   function reset() {
+    // Reset game state
     snakeBody = [202]
     apple = [Math.floor(Math.random() * 399)]
     lastLoadingTime = 0
     scoreBoard = 0
     snakeSpeed = 3
     gameOver = false
-    let gridsInnerHTML = ""
+    let gridsInnerHTML = "" // clear grid
     for (let i = 0; i < 400; i++) {
       gridsInnerHTML += "<div id="+ 'cell' +  "-" + i + " class='grid'></div>"
     }
@@ -97,9 +102,10 @@ function init() {
     const isEatingAnApple = document.querySelector(`#cell-${newSnakeHead}`).classList.contains('apple')
     if (isEatingAnApple) {
       document.querySelector(`#cell-${newSnakeHead}`).classList.remove('apple')
+      
       snakeBody.unshift(snakeTail)
       apple.shift(newSnakeHead)
-      appleEatingSound.play('#apple-audio')
+      appleEatingSound.play('#apple-audio') // Play eating sound
       scoreBoard ++
       scoreDisplay.innerText = scoreBoard
       snakeSpeed ++
@@ -156,3 +162,6 @@ function init() {
 }
 
 window.addEventListener('DOMContentLoaded', init)
+
+
+
