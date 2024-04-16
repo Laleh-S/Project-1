@@ -1,179 +1,174 @@
 
-function init() {
-  // All Variables
-  const container = document.querySelector('.container');
-  const width = 20;
-  const cellCount = width * width;
-  const cells = [];
-  let snakeBody = [202];
-  let apple = [Math.floor(Math.random() * cellCount)];
-  let lastTimestamp = 0;
-  let score = 0;
-  let snakeSpeed = 2;
-  let gameOver = false;
-  let currentDirection = 'up'; // Initialize default direction
+function init() {  
 
-  // DOM elements
-  const scoreDisplay = document.querySelector('span');
-  const speedDisplay = document.querySelector('.speed');
-  const gameOverElement = document.querySelector('#gameOver');
-  const gameOverSound = document.querySelector('#gameover-audio');
-  const appleEatingSound = document.querySelector('#apple-audio');
-
-  // Initialize game
-  function initializeGame() {
-    createGrid();
-    displaySnakeAndApple();
-    resetGame();
-  }
+  const container = document.querySelector('.container')
+  const width = 20
+  const cellCount = width * width
+  const cells = []
 
   // Create grid cells
-  function createGrid() {
-    for (let i = 0; i < cellCount; i++) {
-      const cell = document.createElement('div');
-      cell.id = `cell-${i}`;
-      cell.classList.add('grid');
-      container.appendChild(cell);
-      cells.push(cell);
+  for (let i = 0; i < cellCount; i++) {
+    const cell = document.createElement('div')
+    cell.id = `cell-${i}`
+    cell.classList.add('grid')
+    container.appendChild(cell)
+    cells.push(cell)
+  }
+
+  let snakeBody = [202]
+  let apple = [Math.floor(Math.random() * cells.length)]
+  let lastLoadingTime = 0
+  let scoreBoard = 0
+  let snakeSpeed = 3
+  let gameOver = false
+  const scoreDisplay = document.querySelector('span')
+  const speedDisplay = document.querySelector('.speed')
+  const gameOverSound = document.querySelector('#gameover-audio')
+  const appleEatingSound = document.querySelector('#apple-audio')
+
+
+  // Initialize snake and apple on the grid
+  snakeBody.forEach((idNumber) => {                                                                                                                                    
+    const cell = document.querySelector('#cell-' + idNumber)
+    cell.classList.add('snake')
+  })
+  apple.forEach((idNumber) => {
+    const cell = document.querySelector('#cell-' + idNumber)
+    cell.classList.add('apple') 
+  })
+
+  const up = 38
+  const right = 39
+  const down = 40
+  const left = 37
+
+  function reset() {
+    // Reset game state
+    snakeBody = [202]
+    apple = [Math.floor(Math.random() * 399)]
+    lastLoadingTime = 0
+    scoreBoard = 0
+    snakeSpeed = 3
+    gameOver = false
+    let gridsInnerHTML = "" // clear grid
+    for (let i = 0; i < 400; i++) {
+      gridsInnerHTML += "<div id="+ 'cell' +  "-" + i + " class='grid'></div>"
     }
+    document.querySelector('.container').innerHTML = gridsInnerHTML
+    snakeBody.forEach((idNumber) => {                                                                                                                                    
+      const cell = document.querySelector('#cell-' + idNumber)
+      cell.classList.add('snake');
+    });
+    apple.forEach((idNumber) => {
+      const cell = document.querySelector('#cell-' + idNumber)
+      cell.classList.add('apple') 
+    });
+    document.querySelector('#gameOver').style.visibility = 'hidden'
   }
 
-  // Display snake and apple on the grid
-  function displaySnakeAndApple() {
-    snakeBody.forEach((id) => cells[id].classList.add('snake'));
-    apple.forEach((id) => cells[id].classList.add('apple'));
-  }
+  function snakeMovement(direction){
+    console.log(direction)
 
-  // Reset game state
-  function resetGame() {
-    snakeBody = [202];
-    apple = [Math.floor(Math.random() * cellCount)];
-    score = 0;
-    snakeSpeed = 3;
-    gameOver = false;
-    scoreDisplay.textContent = score;
-    speedDisplay.textContent = snakeSpeed;
-    gameOverElement.style.visibility = 'hidden';
-  }
 
-  // Handle snake movement
-  function moveSnake(direction) {
-    const snakeHead = snakeBody[snakeBody.length - 1];
-    // const snakeTail = snakeBody[0];
+    const snakeHead = snakeBody[snakeBody.length - 1]
+    // const snakeTail = snakeBody[0]
     let newSnakeHead;
 
-    switch (direction) {
-      case 'up':
-        newSnakeHead = (snakeHead - width + cellCount) % cellCount;
-        break;
-      case 'right':
-        newSnakeHead = snakeHead % width === width - 1 ? snakeHead - width + 1 : snakeHead + 1;
-        break;
-      case 'down':
-        newSnakeHead = (snakeHead + width) % cellCount;
-        break;
-      case 'left':
-        newSnakeHead = snakeHead % width === 0 ? snakeHead + width - 1 : snakeHead - 1;
-        break;
+    if(direction === up){
+      if (snakeHead - width < 0) {
+        newSnakeHead = snakeHead + cellCount - width
+      } else {
+        newSnakeHead = snakeHead - width
+      }
+    } else if(direction === right){
+      if (snakeHead % width === width - 1) {
+        newSnakeHead = snakeHead - width + 1
+      } else {
+        newSnakeHead = snakeHead + 1
+      }  
+    } else if(direction === down){
+      if (snakeHead + width >= cellCount) {
+        newSnakeHead = snakeHead - cellCount + width 
+      } else {
+        newSnakeHead = snakeHead + width
+      }
+    } else if(direction === left){
+      if (snakeHead % width === 0) {
+        newSnakeHead = snakeHead + width - 1
+      } else {
+        newSnakeHead = snakeHead - 1
+      }
     }
 
-    const nextCell = cells[newSnakeHead];
+    const isEatingAnApple = document.querySelector(`#cell-${newSnakeHead}`).classList.contains('apple')
+    if (isEatingAnApple) {
+      document.querySelector(`#cell-${newSnakeHead}`).classList.remove('apple')
 
-    if (nextCell.classList.contains('snake') || gameOver) {
-      endGame();
-      return;
-    }
+      const willGrow = true;
+      apple.shift(newSnakeHead)
+      appleEatingSound.play('#apple-audio') // Play eating sound
 
-    snakeBody.push(newSnakeHead);
 
-    if (nextCell.classList.contains('apple')) {
-      nextCell.classList.remove('apple');
-      appleEatingSound.play();
-      spawnNewApple();
-      updateScoreAndSpeed();
+      scoreBoard ++
+      scoreDisplay.innerText = scoreBoard
+      snakeSpeed ++
+      speedDisplay.innerText = snakeSpeed
+
+
+      let randomId = Math.floor(Math.random() * 399);
+      while (snakeBody.includes(randomId)) {
+        randomId = Math.floor(Math.random() * 399);
+      }
+      apple = [randomId];
+    document.querySelector(`#cell-${randomId}`).classList.add('apple');
+
+      appleEatingSound.play('#apple-audio'); // Play eating sound
     } else {
-
-      const snakeTail = snakeBody.shift(); // Remove the first element (tail)
-    cells[snakeTail].classList.remove('snake');
+      // If not eating an apple, move the snake normally
+      const snakeTail = snakeBody.shift(); // Remove the tail
+      document.querySelector(`#cell-${snakeTail}`).classList.remove('snake');
     }
 
-    nextCell.classList.add('snake');
+
+      const isEatingItself = document.querySelector(`#cell-${newSnakeHead}`).classList.contains('snake')
+      if (isEatingItself) {
+        gameOver = true
+        document.querySelector('#gameOver').style.visibility = 'visible' 
+        document.querySelector('#restart').addEventListener('click', () => {reset()})
+        gameOverSound.play('#gameover-audio')
+      }
+    snakeBody.push(newSnakeHead)
+    document.querySelector(`#cell-${newSnakeHead}`).classList.add('snake')
+
   }
 
-  // Update game score and speed
-  function updateScoreAndSpeed() {
-    score++;
-    scoreDisplay.textContent = score;
-    snakeSpeed++;
-    speedDisplay.textContent = snakeSpeed;
-  }
-
-  // Add a new apple on the grid
-  function spawnNewApple() {
-    let randomId;
-    do {
-      randomId = Math.floor(Math.random() * cellCount);
-    } while (cells[randomId].classList.contains('snake'));
-
-    apple.push(randomId);
-    cells[randomId].classList.add('apple');
-  }
-
-  // End the game
-  function endGame() {
-    gameOver = true;
-    gameOverElement.style.visibility = 'visible';
-    gameOverSound.play();
-  }
-
-  // Handle key events to change snake direction
-  function handleKeyPress(event) {
-    const key = event.keyCode;
-    if (key === 38 && currentDirection !== 'down') currentDirection = 'up';
-    else if (key === 39 && currentDirection !== 'left') currentDirection = 'right';
-    else if (key === 40 && currentDirection !== 'up') currentDirection = 'down';
-    else if (key === 37 && currentDirection !== 'right') currentDirection = 'left';
-    console.log('Current Direction:', currentDirection); // Debugging
-  }
-
-  // Main game loop
-  function gameLoop(timestamp) {
-    const timeElapsed = timestamp - lastTimestamp;
-    if (timeElapsed < 1000 / snakeSpeed || gameOver) {
-      requestAnimationFrame(gameLoop);
-      return;
+  let currentDirection = up
+  function updateDirection(e) {
+    if(e.keyCode === up){
+      currentDirection = up
+    } else if(e.keyCode === right){
+      currentDirection = right
+    } else if(e.keyCode === down){
+      currentDirection = down
+    } else if(e.keyCode === left){
+      currentDirection = left
     }
-
-    lastTimestamp = timestamp;
-    moveSnake(currentDirection);
-    requestAnimationFrame(gameLoop);
   }
 
-  // Initialize game on DOM content load
-  document.addEventListener('DOMContentLoaded', () => {
-    initializeGame();
-    document.addEventListener('keydown', handleKeyPress);
-    requestAnimationFrame(gameLoop);
-  });
+  function main(currentTime) {
+    window.requestAnimationFrame(main)
+    const secsSinceLastLoading = (currentTime - lastLoadingTime) / 1000
+    if(secsSinceLastLoading < 1 / snakeSpeed) return
+    console.log('loading')
+    lastLoadingTime = currentTime
+    if (!gameOver) {
+      snakeMovement(currentDirection)
+    }
+  } 
+  window.requestAnimationFrame(main)
+
+  document.addEventListener('keydown', updateDirection)
 }
 
-// Start the game
-init();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+window.addEventListener('DOMContentLoaded', init)
 
