@@ -1,174 +1,193 @@
 
-function init() {  
+// Function to initialize the game
+function init() {
+  // Constants and game variables
+  const container = document.querySelector('.container');
+  const width = 20;
+  const cellCount = width * width;
+  const cells = [];
 
-  const container = document.querySelector('.container')
-  const width = 20
-  const cellCount = width * width
-  const cells = []
+  // Initialize game state
+  let snakeBody = [202, 203];
+  let apple = [Math.floor(Math.random() * cellCount)];
+  let lastUpdateTime = 0;
+  let score = 0;
+  let snakeSpeed = 2;
+  let gameOver = false;
 
-  // Create grid cells
+  // DOM element references
+  const scoreDisplay = document.querySelector('span');
+  const speedDisplay = document.querySelector('.speed');
+  const gameOverElement = document.querySelector('#gameOver');
+  const gameOverSound = document.querySelector('#gameover-audio');
+  const appleEatingSound = document.querySelector('#apple-audio');
+
+  // Set up grid cells
   for (let i = 0; i < cellCount; i++) {
-    const cell = document.createElement('div')
-    cell.id = `cell-${i}`
-    cell.classList.add('grid')
-    container.appendChild(cell)
-    cells.push(cell)
+    const cell = document.createElement('div');
+    cell.id = `cell-${i}`;
+    cell.classList.add('grid');
+    container.appendChild(cell);
+    cells.push(cell);
   }
 
-  let snakeBody = [202]
-  let apple = [Math.floor(Math.random() * cells.length)]
-  let lastLoadingTime = 0
-  let scoreBoard = 0
-  let snakeSpeed = 3
-  let gameOver = false
-  const scoreDisplay = document.querySelector('span')
-  const speedDisplay = document.querySelector('.speed')
-  const gameOverSound = document.querySelector('#gameover-audio')
-  const appleEatingSound = document.querySelector('#apple-audio')
+  // Place initial snake and apple on the grid
+  snakeBody.forEach((id) => cells[id].classList.add('snake'));
+  apple.forEach((id) => cells[id].classList.add('apple'));
 
+  // Reset game state
+  function resetGame() {
+    snakeBody = [202, 203];
+    apple = [Math.floor(Math.random() * cellCount)];
+    lastUpdateTime = 0;
+    score = 0;
+    snakeSpeed = 2;
+    gameOver = false;
 
-  // Initialize snake and apple on the grid
-  snakeBody.forEach((idNumber) => {                                                                                                                                    
-    const cell = document.querySelector('#cell-' + idNumber)
-    cell.classList.add('snake')
-  })
-  apple.forEach((idNumber) => {
-    const cell = document.querySelector('#cell-' + idNumber)
-    cell.classList.add('apple') 
-  })
-
-  const up = 38
-  const right = 39
-  const down = 40
-  const left = 37
-
-  function reset() {
-    // Reset game state
-    snakeBody = [202]
-    apple = [Math.floor(Math.random() * 399)]
-    lastLoadingTime = 0
-    scoreBoard = 0
-    snakeSpeed = 3
-    gameOver = false
-    let gridsInnerHTML = "" // clear grid
-    for (let i = 0; i < 400; i++) {
-      gridsInnerHTML += "<div id="+ 'cell' +  "-" + i + " class='grid'></div>"
-    }
-    document.querySelector('.container').innerHTML = gridsInnerHTML
-    snakeBody.forEach((idNumber) => {                                                                                                                                    
-      const cell = document.querySelector('#cell-' + idNumber)
-      cell.classList.add('snake');
+    // Clear grid and reinitialize snake and apple
+    cells.forEach((cell) => {
+      cell.classList.remove('snake', 'apple');
     });
-    apple.forEach((idNumber) => {
-      const cell = document.querySelector('#cell-' + idNumber)
-      cell.classList.add('apple') 
-    });
-    document.querySelector('#gameOver').style.visibility = 'hidden'
+    snakeBody.forEach((id) => cells[id].classList.add('snake'));
+    apple.forEach((id) => cells[id].classList.add('apple'));
+
+    // Hide game over message
+    gameOverElement.style.visibility = 'hidden';
+
+    // Update score and speed displays
+    scoreDisplay.textContent = score;
+    speedDisplay.textContent = snakeSpeed;
   }
 
-  function snakeMovement(direction){
-    console.log(direction)
-
-
-    const snakeHead = snakeBody[snakeBody.length - 1]
-    // const snakeTail = snakeBody[0]
+  // Handle snake movement
+  function moveSnake(direction) {
+    const snakeHead = snakeBody[snakeBody.length - 1];
     let newSnakeHead;
 
-    if(direction === up){
-      if (snakeHead - width < 0) {
-        newSnakeHead = snakeHead + cellCount - width
-      } else {
-        newSnakeHead = snakeHead - width
-      }
-    } else if(direction === right){
-      if (snakeHead % width === width - 1) {
-        newSnakeHead = snakeHead - width + 1
-      } else {
-        newSnakeHead = snakeHead + 1
-      }  
-    } else if(direction === down){
-      if (snakeHead + width >= cellCount) {
-        newSnakeHead = snakeHead - cellCount + width 
-      } else {
-        newSnakeHead = snakeHead + width
-      }
-    } else if(direction === left){
-      if (snakeHead % width === 0) {
-        newSnakeHead = snakeHead + width - 1
-      } else {
-        newSnakeHead = snakeHead - 1
-      }
+    // Determine new snake head position based on direction
+    switch (direction) {
+      case 38: // Up
+        newSnakeHead = snakeHead - width < 0 ? snakeHead + cellCount - width : snakeHead - width;
+        break;
+      case 39: // Right
+        newSnakeHead = snakeHead % width === width - 1 ? snakeHead - width + 1 : snakeHead + 1;
+        break;
+      case 40: // Down
+        newSnakeHead = snakeHead + width >= cellCount ? snakeHead - cellCount + width : snakeHead + width;
+        break;
+      case 37: // Left
+        newSnakeHead = snakeHead % width === 0 ? snakeHead + width - 1 : snakeHead - 1;
+        break;
     }
 
-    const isEatingAnApple = document.querySelector(`#cell-${newSnakeHead}`).classList.contains('apple')
-    if (isEatingAnApple) {
-      document.querySelector(`#cell-${newSnakeHead}`).classList.remove('apple')
+    const isEatingApple = cells[newSnakeHead].classList.contains('apple');
 
-      const willGrow = true;
-      apple.shift(newSnakeHead)
-      appleEatingSound.play('#apple-audio') // Play eating sound
+    // Check if snake eats the apple
+    if (isEatingApple) {
+      cells[newSnakeHead].classList.remove('apple');
+      appleEatingSound.play();
 
+      // Increase score and snake speed
+      score++;
+      scoreDisplay.textContent = score;
+      snakeSpeed++;
+      speedDisplay.textContent = snakeSpeed;
 
-      scoreBoard ++
-      scoreDisplay.innerText = scoreBoard
-      snakeSpeed ++
-      speedDisplay.innerText = snakeSpeed
-
-
-      let randomId = Math.floor(Math.random() * 399);
-      while (snakeBody.includes(randomId)) {
-        randomId = Math.floor(Math.random() * 399);
-      }
+      // Place new apple
+      let randomId;
+      do {
+        randomId = Math.floor(Math.random() * cellCount);
+      } while (snakeBody.includes(randomId));
       apple = [randomId];
-    document.querySelector(`#cell-${randomId}`).classList.add('apple');
-
-      appleEatingSound.play('#apple-audio'); // Play eating sound
+      cells[randomId].classList.add('apple');
     } else {
-      // If not eating an apple, move the snake normally
-      const snakeTail = snakeBody.shift(); // Remove the tail
-      document.querySelector(`#cell-${snakeTail}`).classList.remove('snake');
+      // Move snake normally
+      const tail = snakeBody.shift();
+      cells[tail].classList.remove('snake');
     }
 
+    const isSnakeCollision = cells[newSnakeHead].classList.contains('snake');
 
-      const isEatingItself = document.querySelector(`#cell-${newSnakeHead}`).classList.contains('snake')
-      if (isEatingItself) {
-        gameOver = true
-        document.querySelector('#gameOver').style.visibility = 'visible' 
-        document.querySelector('#restart').addEventListener('click', () => {reset()})
-        gameOverSound.play('#gameover-audio')
-      }
-    snakeBody.push(newSnakeHead)
-    document.querySelector(`#cell-${newSnakeHead}`).classList.add('snake')
+    // Check if snake bites itself
+    if (isSnakeCollision) {
+      gameOver = true;
+      gameOverElement.style.visibility = 'visible';
+      gameOverSound.play();
 
+      // Display final score
+      const finalScoreDisplay = document.querySelector('#finalScore');
+      finalScoreDisplay.textContent = `Final Score: ${score}`;
+    }
+
+    // Update snake body and grid
+    snakeBody.push(newSnakeHead);
+    cells[newSnakeHead].classList.add('snake');
   }
 
-  let currentDirection = up
+  let currentDirection = 38; // Initial direction: up
+
+  // Update snake direction based on keyboard input
   function updateDirection(e) {
-    if(e.keyCode === up){
-      currentDirection = up
-    } else if(e.keyCode === right){
-      currentDirection = right
-    } else if(e.keyCode === down){
-      currentDirection = down
-    } else if(e.keyCode === left){
-      currentDirection = left
+    const key = e.keyCode;
+    if ([38, 39, 40, 37].includes(key)) {
+      currentDirection = key;
     }
   }
 
-  function main(currentTime) {
-    window.requestAnimationFrame(main)
-    const secsSinceLastLoading = (currentTime - lastLoadingTime) / 1000
-    if(secsSinceLastLoading < 1 / snakeSpeed) return
-    console.log('loading')
-    lastLoadingTime = currentTime
-    if (!gameOver) {
-      snakeMovement(currentDirection)
-    }
-  } 
-  window.requestAnimationFrame(main)
+  // Main game loop
+  function gameLoop(currentTime) {
+    window.requestAnimationFrame(gameLoop);
+    const secondsSinceLastUpdate = (currentTime - lastUpdateTime) / 1000;
 
-  document.addEventListener('keydown', updateDirection)
+    if (secondsSinceLastUpdate < 1 / snakeSpeed) return;
+
+    lastUpdateTime = currentTime;
+
+    if (!gameOver) {
+      moveSnake(currentDirection);
+    }
+  }
+
+  // Start game loop and listen for keyboard input
+  window.requestAnimationFrame(gameLoop);
+  document.addEventListener('keydown', updateDirection);
+
+  // Reset game on button click
+  const restartButton = document.querySelector('#restart');
+  restartButton.addEventListener('click', resetGame);
 }
 
-window.addEventListener('DOMContentLoaded', init)
+// Initialize game when DOM content is loaded
+window.addEventListener('DOMContentLoaded', init);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
